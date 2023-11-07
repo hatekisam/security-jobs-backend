@@ -6,27 +6,31 @@ export interface IUser {
   about?: string;
   workExperience: Types.ObjectId[];
   education: Types.ObjectId[];
-  skills: string[];
+  skills: Types.ObjectId[];
   languages: Types.ObjectId[];
   awards: Types.ObjectId[];
-  resume: Types.ObjectId[];
+  files: Types.ObjectId[];
   dob: Date;
-  gender: "MALE" | "FEMALE";
+  gender: "MALE" | "FEMALE" | "NONE";
   location: string;
 }
 
-export interface IUserMethods {
-  toJsonWithoutPassword(): Partial<Document<IUser>>;
-}
-
-type UserModel = Model<IUser, Record<string, never>, IUserMethods>;
+type UserModel = Model<IUser, Record<string, never>>;
 
 const schema = new Schema<IUser, UserModel>(
   {
     username: { type: String, required: true },
     about: { type: String, required: false },
     profile: { type: String, required: false },
+    location: { type: String },
+    dob: { type: Date },
     workExperience: [{ type: Schema.ObjectId, ref: "Work" }],
+    awards: [{ type: Schema.ObjectId, ref: "Award" }],
+    languages: [{ type: Schema.ObjectId, ref: "Language" }],
+    education: [{ type: Schema.ObjectId, ref: "Education" }],
+    files: [{ type: Schema.ObjectId, ref: "Work" }],
+    skills: [{ type: Schema.ObjectId, ref: "Skills" }],
+    gender: { type: String, default: "NONE" },
   },
   {
     timestamps: true,
@@ -34,8 +38,7 @@ const schema = new Schema<IUser, UserModel>(
 );
 
 schema.index({
-  name: "text",
-  email: "text",
+  username: "text",
 });
 
 schema.set("toJSON", {
@@ -46,12 +49,6 @@ schema.set("toJSON", {
   },
 });
 
-schema.method("toJsonWithoutPassword", function toJsonWithoutPassword() {
-  const userObject: any = this.toJSON();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { password, ...userWithoutPassword } = userObject;
-  return userWithoutPassword;
-});
 
 schema.virtual("role").get(function () {
   return "USER";

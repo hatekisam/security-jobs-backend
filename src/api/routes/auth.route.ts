@@ -1,21 +1,20 @@
-import express from 'express'
-import { authController } from '../controllers'
-import validator from '../middlewares/validator'
+import express from "express";
+import { authController } from "../controllers";
+import validator from "../middlewares/validator";
 import {
-	adminValidations,
-	authValidation,
-	userValidations,
-} from '../validations'
+  adminValidations,
+  authValidation,
+  userValidations,
+} from "../validations";
 
-const router = express.Router()
+const router = express.Router();
 
 /**
  * @swagger
  * tags:
  *   name: Auth
- *   description: API responsible for all authentication services 
+ *   description: API responsible for all authentication services
  */
-
 
 /**
  * @swagger
@@ -47,11 +46,12 @@ const router = express.Router()
  *       401:
  *         description: Unauthorized
  */
+
 router.post(
-	'/login',
-	validator.body(userValidations.loginUser),
-	authController.login
-)
+  "/login",
+  validator.body(userValidations.loginUser),
+  authController.login
+);
 
 /**
  * @swagger
@@ -65,52 +65,64 @@ router.post(
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             type: object
+ *             properties:
+ *               fullname:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               phone_number:
+ *                 type: string
+ *             required:
+ *               - fullname
+ *               - email
+ *               - password
+ *               - phone_number
  *     responses:
  *       200:
- *         description: Successful login
+ *         description: Successful registration
  *       400:
  *         description: Invalid input
  *       401:
  *         description: Unauthorized
  */
-router.post(
-	'/register',
-	validator.body(userValidations.newUser),
-	authController.register
-)
-
-
 
 router.post(
-	'/forgot-password',
-	validator.body(authValidation.forgotPassword),
-	authController.forgotPassword
-)
+  "/register",
+  validator.body(userValidations.newUser),
+  authController.register
+);
 
 router.post(
-	'/new-password',
-	validator.body(authValidation.newPassword),
-	authController.newPassword
-)
+  "/forgot-password",
+  validator.body(authValidation.forgotPassword),
+  authController.forgotPassword
+);
 
 router.post(
-	'/admin/login',
-	validator.body(adminValidations.loginAdmin),
-	authController.loginAdmin
-)
+  "/new-password",
+  validator.body(authValidation.newPassword),
+  authController.newPassword
+);
 
 router.post(
-	'/verifyMail',
-	validator.body(authValidation.verifyMail),
-	authController.verifyMail
-)
-
+  "/admin/login",
+  validator.body(adminValidations.loginAdmin),
+  authController.loginAdmin
+);
 
 router.post(
-	'/send-verification-email',
-	validator.body(authValidation.sendVerifyMail),
-	authController.sendVerifyMail
-)
+  "/verifyMail",
+  validator.body(authValidation.verifyMail),
+  authController.verifyMail
+);
 
-export default router
+router.post(
+  "/send-verification-email",
+  validator.body(authValidation.sendVerifyMail),
+  authController.sendVerifyMail
+);
+
+export default router;

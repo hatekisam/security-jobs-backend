@@ -46,7 +46,7 @@ schema.set("toJSON", {
 
 schema.method("toJsonWithoutPassword", function toJsonWithoutPassword() {
   const adminObject: any = this.toJSON();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, ...adminWithoutPassword } = adminObject;
   return adminWithoutPassword;
 });
