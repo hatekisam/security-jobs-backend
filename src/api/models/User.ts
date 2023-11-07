@@ -4,15 +4,15 @@ export interface IUser {
   username: string;
   profile: string;
   about?: string;
-  workExperience:Types.ObjectId[];
-  education:Types.ObjectId[];
-  skills:string[];
-  languages:Language[];
-  awards:Awards[];
-  resume:Awards[];
-  dob:Date;
-  gender:"MALE" | "FEMALE";
-  location:string;
+  workExperience: Types.ObjectId[];
+  education: Types.ObjectId[];
+  skills: string[];
+  languages: Types.ObjectId[];
+  awards: Types.ObjectId[];
+  resume: Types.ObjectId[];
+  dob: Date;
+  gender: "MALE" | "FEMALE";
+  location: string;
 }
 
 export interface IUserMethods {
@@ -26,7 +26,7 @@ const schema = new Schema<IUser, UserModel>(
     username: { type: String, required: true },
     about: { type: String, required: false },
     profile: { type: String, required: false },
-    workExperience:{type:Schema.ObjectId}
+    workExperience: [{ type: Schema.ObjectId, ref: "Work" }],
   },
   {
     timestamps: true,
