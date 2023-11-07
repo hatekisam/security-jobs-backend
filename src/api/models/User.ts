@@ -1,19 +1,18 @@
 import { Schema, model, Model, Document, Types } from "mongoose";
 
 export interface IUser {
-  name: string;
-  email: string;
-  password: string;
   username: string;
   profile: string;
   about?: string;
-  phone?: string;
-  theme: "dark" | "light";
-  activated: boolean;
-  emailVerified: boolean;
-  phoneVerified: boolean;
-  courses: Types.ObjectId[];
-  coursesLevel: Types.ObjectId[];
+  workExperience:Types.ObjectId[];
+  education:Types.ObjectId[];
+  skills:string[];
+  languages:Language[];
+  awards:Awards[];
+  resume:Awards[];
+  dob:Date;
+  gender:"MALE" | "FEMALE";
+  location:string;
 }
 
 export interface IUserMethods {
@@ -24,17 +23,10 @@ type UserModel = Model<IUser, Record<string, never>, IUserMethods>;
 
 const schema = new Schema<IUser, UserModel>(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, lowercase: true },
-    emailVerified: { type: Boolean, default: false },
-    password: { type: String, required: true },
+    username: { type: String, required: true },
     about: { type: String, required: false },
     profile: { type: String, required: false },
-    phone: { type: String, unique: true },
-    theme: { type: String, default: "dark" },
-    phoneVerified: { type: Boolean, default: false },
-    coursesLevel: { type: [Schema.ObjectId], ref: "UserCourse" },
-    courses: { type: [Schema.ObjectId], ref: "Course" },
+    workExperience:{type:Schema.ObjectId}
   },
   {
     timestamps: true,
