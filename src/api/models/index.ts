@@ -6,6 +6,7 @@ export { default as Notification } from "./Notification";
 export { default as Contact } from "./Contact";
 export { default as Faq } from "./Faq";
 export { default as Course } from "./Courses";
-export { default as CourseReview } from "./CourseReview";
+export { default as CourseReview } from "./Review";
 export { default as Testimonial } from "./Testimonial";
 export { default as Account } from "./Account";
+export { default as Company } from "./Company";
