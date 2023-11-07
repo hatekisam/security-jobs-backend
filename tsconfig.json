@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "lib": ["ES2015"],
+    "module": "CommonJS",
+    "rootDir": "./src",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "noUnusedParameters": true,
+    "declaration": true,
+    "sourceMap": true,
+    "baseUrl": "./src",
+
+    "paths":{
+      "@/config": ["./config/*"],
+      "@/models": ["api/models/*"],
+      "@/controllers": ["api/controllers/*"]
+    }
+
+  },
+  "exclude": ["node_modules/*"],
+  "include": ["src"]
+}
