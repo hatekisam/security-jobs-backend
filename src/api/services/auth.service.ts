@@ -1,4 +1,4 @@
-import { Admin, User } from "../models";
+import { Account, Admin, User } from "../models";
 import APIError from "../helpers/APIError";
 import status from "http-status";
 import bcrypt from "bcryptjs";
@@ -7,7 +7,8 @@ import { NewUser } from "../interfaces/User";
 import { createAuthToken } from "../helpers/authToken";
 import { generateAppToken, verifyAppToken } from "../helpers/emailToken";
 import mailer from "../helpers/mailer";
-import userService from "./user.service";
+import userService from "./account.service";
+import { NewAccount } from "api/interfaces/Account";
 
 const login = async ({
   email,
@@ -16,20 +17,22 @@ const login = async ({
   email: string;
   password: string;
 }) => {
-  const user = await User.findOne({ email });
-  if (!user) throw new APIError(status.UNAUTHORIZED, "Email does not exist");
-  const isValidPassword = await bcrypt.compare(password, user.password);
+  const account = await Account.findOne({ email })
+    .populate("user")
+    .populate("company");
+  if (!account) throw new APIError(status.UNAUTHORIZED, "Email does not exist");
+  const isValidPassword = await bcrypt.compare(password, account.password);
   if (!isValidPassword)
     throw new APIError(status.UNAUTHORIZED, "Incorrect password");
 
   return {
     token: createAuthToken({
-      id: user.id,
-      email: user.email,
-      name: user.name,
+      id: account.id,
+      email: account.email,
+      name: account.name,
       role: "USER",
     }),
-    user: user.toJsonWithoutPassword(),
+    account: account.toJsonWithoutPassword(),
   };
 };
 
@@ -57,8 +60,8 @@ const loginAdmin = async ({
     user: admin.toJsonWithoutPassword(),
   };
 };
-const register = async (body: NewUser) => {
-  const user = await userService.createUser(body);
+const register = async (body: NewAccount) => {
+  const user = await userService.createAccount(body);
   const token = await generateAppToken(user.email, "VERIFY_EMAIL");
   return {
     token: createAuthToken({
@@ -128,7 +131,7 @@ const verifyMail = async ({
   );
 
   return {
-    user: user!.toJsonWithoutPassword(),
+    user: user,
     msg: "Email verified successfully",
   };
 };

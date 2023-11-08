@@ -6,6 +6,7 @@ import {
   authValidation,
   userValidations,
 } from "../validations";
+import accountValidations from "api/validations/account.validations";
 
 const router = express.Router();
 
@@ -49,7 +50,7 @@ const router = express.Router();
 
 router.post(
   "/login",
-  validator.body(userValidations.loginUser),
+  validator.body(accountValidations.loginAccount),
   authController.login
 );
 
@@ -91,7 +92,7 @@ router.post(
 
 router.post(
   "/register",
-  validator.body(userValidations.newUser),
+  validator.body(accountValidations.newAccount),
   authController.register
 );
 

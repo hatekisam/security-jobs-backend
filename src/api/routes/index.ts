@@ -1,5 +1,5 @@
 import express, { Router } from 'express'
-import userRouter from './user.route'
+import userRouter from './account.route'
 import authRouter from './auth.route'
 import metadataRouter from './metadata.route'
 import adminRouter from './admin.route'
