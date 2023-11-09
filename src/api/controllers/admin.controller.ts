@@ -37,11 +37,11 @@ const createAdmin = async (
     const creator = req.user!;
     const { body: newAdmin }: { body: NewAdmin } = req;
 
-    if (!roleGuards.isRoleGreater(creator.role, newAdmin.role))
-      throw new APIError(
-        status.UNAUTHORIZED,
-        `You are not allowed to create and admin with role ${newAdmin.role}`
-      );
+    // if (!roleGuards.isRoleGreater(creator.role, newAdmin.role))
+    //   throw new APIError(
+    //     status.UNAUTHORIZED,
+    //     `You are not allowed to create and admin with role ${newAdmin.role}`
+    //   );
 
     const savedAdmin = await adminService.createAdmin(newAdmin);
 
@@ -61,11 +61,11 @@ const updateAdmin = async (
     const id = req.params.id;
     const adminToUpdate = req.body;
 
-    if (!roleGuards.isRoleGreater(creator.role, adminToUpdate.role))
-      throw new APIError(
-        status.UNAUTHORIZED,
-        `You are not allowed to update an admin with role ${adminToUpdate.role}`
-      );
+    // if (!roleGuards.isRoleGreater(creator.role, adminToUpdate.role))
+    //   throw new APIError(
+    //     status.UNAUTHORIZED,
+    //     `You are not allowed to update an admin with role ${adminToUpdate.role}`
+    //   );
 
     const updatedAdmin = await adminService.updateAdmin(id, req.body);
 

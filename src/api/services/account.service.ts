@@ -19,11 +19,11 @@ const generateRandomPassword = (length: number): string => {
 };
 
 const getAccountById = (id: string) => {
-  return User.findOne({ _id: id }).populate("user").populate("company");
+  return Account.findOne({ _id: id }).populate("user").populate("company");
 };
 
 const getAllAccounts = async () => {
-  return User.find({}).populate("user").populate("company");
+  return Account.find({}).populate("user").populate("company");
 };
 const createAccount = async (body: NewAccount) => {
   const existingAccount = await Account.findOne({
@@ -39,14 +39,14 @@ const createAccount = async (body: NewAccount) => {
     ...body,
     password,
   });
-  return newUser.save();
+  return await newUser.save();
 };
 const updateAccount = (id: string, body: Partial<PublicUser>) => {
-  return User.findByIdAndUpdate(id, { $set: { ...body } });
+  return Account.findByIdAndUpdate(id, { $set: { ...body } });
 };
 
 const deleteAccount = async (id: string) => {
-  await User.findByIdAndDelete(id);
+  await Account.findByIdAndDelete(id);
 };
 
 export default {

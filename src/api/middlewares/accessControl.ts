@@ -19,8 +19,8 @@ export default function accessControl(allowedRoles: Role[] | 'ALL') {
 			req.user = payload
 
 			if (allowedRoles === 'ALL') return next()
-			if (!allowedRoles.includes(payload.role))
-				throw new APIError(status.UNAUTHORIZED, `Access denied`)
+			// if (!allowedRoles.includes(payload.role))
+			// 	throw new APIError(status.UNAUTHORIZED, `Access denied`)
 
 			next()
 		} catch (err) {

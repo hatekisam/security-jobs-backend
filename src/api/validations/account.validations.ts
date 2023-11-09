@@ -1,5 +1,4 @@
 import Joi from "joi";
-import { LoginUser, NewUser } from "../interfaces/User";
 import { LoginAccount, NewAccount } from "api/interfaces/Account";
 export default {
   newAccount: Joi.object<NewAccount>({

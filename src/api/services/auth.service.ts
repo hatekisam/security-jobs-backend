@@ -7,8 +7,8 @@ import { NewUser } from "../interfaces/User";
 import { createAuthToken } from "../helpers/authToken";
 import { generateAppToken, verifyAppToken } from "../helpers/emailToken";
 import mailer from "../helpers/mailer";
-import userService from "./account.service";
 import { NewAccount } from "api/interfaces/Account";
+import accountService from "./account.service";
 
 const login = async ({
   email,
@@ -30,7 +30,6 @@ const login = async ({
       id: account.id,
       email: account.email,
       name: account.name,
-      role: "USER",
     }),
     account: account.toJsonWithoutPassword(),
   };
@@ -55,22 +54,20 @@ const loginAdmin = async ({
       id: admin.id,
       email: admin.email,
       name: admin.name,
-      role: admin.role,
     }),
     user: admin.toJsonWithoutPassword(),
   };
 };
 const register = async (body: NewAccount) => {
-  const user = await userService.createAccount(body);
-  const token = await generateAppToken(user.email, "VERIFY_EMAIL");
+  const account = await accountService.createAccount(body);
+  const token = await generateAppToken(account.email, "VERIFY_EMAIL");
   return {
     token: createAuthToken({
-      id: user.id,
+      id: account.id,
       name: body.name,
       email: body.email,
-      role: "USER",
     }),
-    user: user.toJsonWithoutPassword(),
+    account: account.toJsonWithoutPassword(),
   };
 };
 

@@ -4,9 +4,8 @@ import validator from "../middlewares/validator";
 import {
   adminValidations,
   authValidation,
-  userValidations,
+  accountValidations
 } from "../validations";
-import accountValidations from "api/validations/account.validations";
 
 const router = express.Router();
 

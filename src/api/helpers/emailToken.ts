@@ -2,7 +2,7 @@ import Token from '../models/Token'
 import config from '../../config/config'
 import * as crypto from 'crypto'
 import bcrypt from 'bcryptjs'
-import { User } from '../models'
+import { Account, User } from '../models'
 import APIError from './APIError'
 import status from 'http-status'
 import { TokenType } from '../interfaces/Token'
@@ -11,10 +11,10 @@ export async function generateAppToken(
 	email: string,
 	tokenType: TokenType
 ): Promise<string> {
-	const user = await User.findOne({ email })
+	const user = await Account.findOne({ email })
 
 	if (!user) {
-		throw new APIError(status.BAD_REQUEST, `User does not exist`)
+		throw new APIError(status.BAD_REQUEST, `Account does not exist`)
 	}
 
 	const existingToken = await Token.findOne({ email, type: tokenType })

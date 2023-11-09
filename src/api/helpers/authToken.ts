@@ -5,7 +5,6 @@ export interface Payload {
   id: string;
   email: string;
   name: string;
-  role: Role;
 }
 
 export const createAuthToken = (payload: Payload) => {
