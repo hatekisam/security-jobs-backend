@@ -1,66 +1,62 @@
-import nodemailer, { Transporter } from 'nodemailer'
-
+import nodemailer, { Transporter } from "nodemailer";
 
 class Mailer {
-	private transporter: Transporter
+  private transporter: Transporter;
 
-	constructor() {
-		this.transporter = nodemailer.createTransport({
-			host: 'smtp-relay.brevo.com',
-			port: 587,
-			auth: {
-				user: 'antoniealexandruiulian@gmail.com',
-				pass: '01CZv79UItqLJmfh',
-			},
-		})
-	}
+  constructor() {
+    this.transporter = nodemailer.createTransport({
+      host: "smtp-relay.brevo.com",
+      port: 587,
+      auth: {
+        user: "antoniealexandruiulian@gmail.com",
+        pass: "01CZv79UItqLJmfh",
+      },
+    });
+  }
 
-	async sendPasswordResetEmail(
-		toEmail: string,
-		resetLink: string
-	): Promise<void> {
-		try {
-			const mailOptions = {
-				from: 'service@jobapp.com',
-				to: toEmail,
-				subject: 'Password Reset',
-				text: `Click the link below to reset your password:\n\n${resetLink}`,
-			}
+  async sendPasswordResetEmail(
+    toEmail: string,
+    resetLink: string
+  ): Promise<void> {
+    try {
+      const mailOptions = {
+        from: "service@jobapp.com",
+        to: toEmail,
+        subject: "Password Reset",
+        text: `Click the link below to reset your password:\n\n${resetLink}`,
+      };
 
-			await this.transporter.sendMail(mailOptions)
-		} catch (error) {
-			console.error('Error sending email: ', error)
-			throw error
-		}
-	}
-	async sendVerificationEmail(
-		toEmail: string,
-		redirectLink: string
-	): Promise<void> {
-		try {
-			const mailOptions = {
-				from: 'service@jobapp.com',
-				to: toEmail,
-				subject: 'Email Verification',
-				text: `Click the link below to verify your email:\n\n${redirectLink}`,
-			}
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email: ", error);
+      throw error;
+    }
+  }
+  async sendVerificationEmail(
+    toEmail: string,
+    redirectLink: string
+  ): Promise<void> {
+    try {
+      const mailOptions = {
+        from: "service@jobapp.com",
+        to: toEmail,
+        subject: "Email Verification",
+        text: `Click the link below to verify your email:\n\n${redirectLink}`,
+      };
 
-			await this.transporter.sendMail(mailOptions)
-		} catch (error) {
-			console.error('Error sending email: ', error)
-			throw error
-		}
-	}
-	async sendPasswordEmail(
-		toEmail: string,
-		password: string
-	): Promise<void> {
-		try {
-			const mailOptions = {
-				from: 'service@jobapp.com',
-				to: toEmail,
-				subject: 'Your password to Login in to Job App',
-				html: `
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email: ", error);
+      throw error;
+    }
+  }
+  async sendPasswordEmail(toEmail: string, password: string): Promise<void> {
+    try {
+      const mailOptions = {
+        from: "service@jobapp.com",
+        to: toEmail,
+        subject: "Your password to Login in to Job App",
+        html: `
 				<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,24 +143,22 @@ class Mailer {
   </script>
 </body>
 </html>
-`
-			}
+`,
+      };
 
-			await this.transporter.sendMail(mailOptions)
-		} catch (error) {
-			console.error('Error sending email: ', error)
-			throw error
-		}
-	}
-	async sendProfileDenied(
-		toEmail: string,
-	): Promise<void> {
-		try {
-			const mailOptions = {
-				from: 'service@jobapp.com',
-				to: toEmail,
-				subject: 'Sorry , your request to became a tradeperson was rejected',
-				html: `<!DOCTYPE html>
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email: ", error);
+      throw error;
+    }
+  }
+  async sendProfileDenied(toEmail: string): Promise<void> {
+    try {
+      const mailOptions = {
+        from: "service@jobapp.com",
+        to: toEmail,
+        subject: "Sorry , your request to became a tradeperson was rejected",
+        html: `<!DOCTYPE html>
 				<html lang="en">
 				<head>
 				  <meta charset="UTF-8">
@@ -182,24 +176,22 @@ class Mailer {
 				  </div>
 				</body>
 				</html>
-				`
-			}
+				`,
+      };
 
-			await this.transporter.sendMail(mailOptions)
-		} catch (error) {
-			console.error('Error sending email: ', error)
-			throw error
-		}
-	}
-	async sendProfileAccepted(
-		toEmail: string,
-	): Promise<void> {
-		try {
-			const mailOptions = {
-				from: 'service@jobapp.com',
-				to: toEmail,
-				subject: 'Congratulations, you have become a trade person on JobApp',
-				html: `<!DOCTYPE html>
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email: ", error);
+      throw error;
+    }
+  }
+  async sendProfileAccepted(toEmail: string): Promise<void> {
+    try {
+      const mailOptions = {
+        from: "service@jobapp.com",
+        to: toEmail,
+        subject: "Congratulations, you have become a trade person on JobApp",
+        html: `<!DOCTYPE html>
 				<html lang="en">
 				<head>
 				  <meta charset="UTF-8">
@@ -216,22 +208,22 @@ class Mailer {
 				  </div>
 				</body>
 				</html>
-				`
-			}
+				`,
+      };
 
-			await this.transporter.sendMail(mailOptions)
-		} catch (error) {
-			console.error('Error sending email: ', error)
-			throw error
-		}
-	}
-	async sendProfileRequestSent(toEmail: string): Promise<void> {
-		try {
-			const mailOptions = {
-				from: 'service@jobapp.com',
-				to: toEmail,
-				subject: 'Your Request to a Profile on JobApp',
-				html: `
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email: ", error);
+      throw error;
+    }
+  }
+  async sendProfileRequestSent(toEmail: string): Promise<void> {
+    try {
+      const mailOptions = {
+        from: "service@jobapp.com",
+        to: toEmail,
+        subject: "Your Request to a Profile on JobApp",
+        html: `
 		      <!DOCTYPE html>
 		      <html lang="en">
 		      <head>
@@ -250,14 +242,14 @@ class Mailer {
 		      </body>
 		      </html>
 		    `,
-			};
+      };
 
-			await this.transporter.sendMail(mailOptions);
-		} catch (error) {
-			console.error('Error sending email: ', error);
-			throw error;
-		}
-	}
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email: ", error);
+      throw error;
+    }
+  }
 }
 
-export default new Mailer()
+export default new Mailer();

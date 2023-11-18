@@ -4,7 +4,7 @@ import validator from "../middlewares/validator";
 import {
   adminValidations,
   authValidation,
-  accountValidations
+  accountValidations,
 } from "../validations";
 
 const router = express.Router();
@@ -96,9 +96,15 @@ router.post(
 );
 
 router.post(
-  "/forgot-password",
-  validator.body(authValidation.forgotPassword),
+  "/forgot-password/",
+  validator.body(accountValidations.forgotPassword),
   authController.forgotPassword
+);
+
+router.post(
+  "/verify-email/",
+  validator.body(accountValidations.verifyEmail),
+  authController.verifyMail
 );
 
 router.post(

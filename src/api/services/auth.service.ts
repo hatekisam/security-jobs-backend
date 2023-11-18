@@ -99,13 +99,10 @@ const newPassword = async ({
 
 const forgotPassword = async (email: string) => {
   const token = await generateAppToken(email, "PASSWORD_RESET");
-
-  // todo: Get app url from config instead of hardcoding
   mailer.sendPasswordResetEmail(
     email,
     `${config.CLIENT_URL}/new-password?email=${email}&token=${token}`
   );
-
   return { token, msg: "Please check your email for the password reset link" };
 };
 

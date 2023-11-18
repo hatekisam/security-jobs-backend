@@ -7,6 +7,12 @@ export default {
     phone: Joi.string().required(),
     password: Joi.string().min(8).max(25).required(),
   }),
+  forgotPassword: Joi.object({
+    email: Joi.string().email().required(),
+  }),
+  verifyEmail: Joi.object({
+    code: Joi.string().length(4),
+  }),
   loginAccount: Joi.object<LoginAccount>({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
