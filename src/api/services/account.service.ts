@@ -18,6 +18,10 @@ const generateRandomPassword = (length: number): string => {
   return password;
 };
 
+const becomeUser = (id:string) => {
+  
+}
+
 const getAccountById = (id: string) => {
   return Account.findOne({ _id: id }).populate("user").populate("company");
 };

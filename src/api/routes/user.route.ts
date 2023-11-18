@@ -1,5 +1,5 @@
 import express from "express";
-import { accountController } from "../controllers";
+import { userController } from "../controllers";
 import validator from "../middlewares/validator";
 import {
   idValidation,
@@ -10,18 +10,18 @@ import accessControl from "../middlewares/accessControl";
 
 const router = express.Router();
 
-router.get(
-  "/search",
-  validator.query(paginateValidations.query),
-  accountController.searchUser
-);
+// router.get(
+//   "/search",
+//   validator.query(paginateValidations.query),
+//   userController.searchUser
+// );
 
-router.get("/", accountController.getAllAccounts);
+router.get("/", userController.getAllUsers);
 
 router.get(
   "/:id",
   validator.params({ id: idValidation }),
-  accountController.getAccount
+  userController.getUserById
 );
 
 router.put(
@@ -29,14 +29,14 @@ router.put(
   accessControl("ALL"),
   validator.params({ id: idValidation }),
   validator.body(accountValidations.updateAccount),
-  accountController.updateAccount
+  userController.updateUser
 );
 
 router.delete(
   "/:id",
   accessControl(["ADMIN"]),
   validator.params({ id: idValidation }),
-  accountController.deleteAccount
+  userController.deleteUser
 );
 
 export default router;

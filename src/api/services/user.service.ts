@@ -1,0 +1,47 @@
+import { Account, User } from "../models";
+import { NewUser, PublicUser } from "../interfaces/User";
+import bcrypt from "bcryptjs";
+import APIError from "../helpers/APIError";
+import status from "http-status";
+import config from "../../config/config";
+import mailer from "../helpers/mailer";
+import { NewAccount } from "api/interfaces/Account";
+
+const getUserById = (id: string) => {
+  return Account.findOne({ _id: id }).populate("user");
+};
+
+const getAllUsers = async () => {
+  return Account.find({ user: { $ne: null } }).populate("user");
+};
+// const createAccount = async (body: NewAccount) => {
+//   const existingAccount = await Account.findOne({
+//     $or: [{ email: body.email }, { phone: body.phone }],
+//   });
+//   if (existingAccount) {
+//     if (existingAccount.email === body.email)
+//       throw new APIError(status.CONFLICT, `Email already taken`);
+//     throw new APIError(status.CONFLICT, `Phone Number already taken`);
+//   }
+//   const password = await bcrypt.hash(body.password, config.BCRYPT_SALT);
+//   const newUser = new Account({
+//     ...body,
+//     password,
+//   });
+//   return await newUser.save();
+// };
+const updateUser = (id: string, body: Partial<PublicUser>) => {
+  return Account.findByIdAndUpdate(id, { $set: { ...body } });
+};
+
+const deleteUser = async (id: string) => {
+  await Account.findByIdAndDelete(id);
+};
+
+export default {
+  getUserById,
+  getAllUsers,
+  // createAccount,
+  updateUser,
+  deleteUser,
+};
