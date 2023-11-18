@@ -15,7 +15,7 @@ export default {
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
-  updateAccount: Joi.object<NewAccount>({
+  updateAccount: Joi.object({
     name: Joi.string().optional(),
     email: Joi.string().email().optional(),
     password: Joi.string().min(8).max(25).optional(),

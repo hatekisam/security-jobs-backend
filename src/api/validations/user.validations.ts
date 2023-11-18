@@ -13,13 +13,8 @@ export default {
   //   email: Joi.string().email().required(),
   //   password: Joi.string().required(),
   // }),
-  // updateUser: Joi.object<NewUser>({
-  //   name: Joi.string().optional(),
-  //   email: Joi.string().email().optional(),
-  //   password: Joi.string().min(8).max(25).optional(),
-  //   username: Joi.string().optional(),
-  //   phone: Joi.string().optional(),
-  //   profile: Joi.string().optional(),
-  //   bio: Joi.string().optional(),
-  // }),
+  updateUser: Joi.object({
+    about:Joi.string().optional(),
+    
+  }),
 };
