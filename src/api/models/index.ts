@@ -9,4 +9,4 @@ export { default as Course } from "./Courses";
 export { default as CourseReview } from "./Review";
 export { default as Testimonial } from "./Testimonial";
 export { default as Account, IAccount } from "./Account";
-export { default as Company } from "./Company";
+export { default as Company, ICompany } from "./Company";

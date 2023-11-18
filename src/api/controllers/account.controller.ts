@@ -36,7 +36,7 @@ const becomeRecruiter = async (
         status.BAD_REQUEST,
         "You are not allowed to another person's account"
       );
-    await accountService.becomeRecruiter(req.params.id);
+    await accountService.becomeRecruiter(req.params.id, req.body);
     res.json({ msg: "Become a recruiter successfully" });
   } catch (err) {
     next(err);

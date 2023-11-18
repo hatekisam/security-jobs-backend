@@ -1,4 +1,4 @@
-import { Account, Company, User } from "../models";
+import { Account, Company, User, ICompany } from "../models";
 import bcrypt from "bcryptjs";
 import APIError from "../helpers/APIError";
 import status from "http-status";
@@ -24,8 +24,8 @@ const becomeUser = async ({
   return await account?.save();
 };
 
-const becomeRecruiter = async (id: string) => {
-  const newCompany = new Company();
+const becomeRecruiter = async (id: string, body: ICompany) => {
+  const newCompany = new Company(body);
   await newCompany.save();
   const account = await Account.findByIdAndUpdate(
     id,
