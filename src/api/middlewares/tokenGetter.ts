@@ -9,9 +9,12 @@ export default function tokenGetter(
 	_: Response,
 	next: NextFunction
 ) {
-	const authHeader = req.headers['authorization']
+	const authHeader = req.headers.authorization
+
 	if (authHeader && authHeader.startsWith('Bearer ')) {
-		req.token = authHeader.substring(7) 
+		console.log("It starts with it")
+		req.token = authHeader.slice(7)
+		console.log(authHeader.slice(7))
 	}
 	next()
 }
