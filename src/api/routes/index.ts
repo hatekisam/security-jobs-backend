@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import userRouter from "./user.route";
+import accountRouter from "./account.route";
 import authRouter from "./auth.route";
 import metadataRouter from "./metadata.route";
 // import adminRouter from './admin.route'
@@ -17,6 +18,7 @@ const routes: {
 }[] = [
   // { path: '/admin', route: adminRouter },
   { path: "/user", route: userRouter },
+  { path: "/account", route: accountRouter },
   { path: "/auth", route: authRouter },
   { path: "/metadata", route: metadataRouter },
   // { path: '/notification', route: notificationRouter },

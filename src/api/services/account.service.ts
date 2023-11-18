@@ -1,34 +1,30 @@
 import { Account, User } from "../models";
-import { NewUser, PublicUser } from "../interfaces/User";
 import bcrypt from "bcryptjs";
 import APIError from "../helpers/APIError";
 import status from "http-status";
 import config from "../../config/config";
-import mailer from "../helpers/mailer";
 import { NewAccount } from "api/interfaces/Account";
 
-const generateRandomPassword = (length: number): string => {
-  const charset =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
-  let password = "";
-  for (let i = 0; i <= length; i++) {
-    const randomIndex = Math.floor(Math.random() * charset.length);
-    password += charset[randomIndex];
-  }
-  return password;
+
+const becomeUser = async ({
+  id,
+  username,
+}: {
+  id: string;
+  username: string;
+}) => {
+  const newUser = new User({ username: username });
+  await newUser.save();
+  const account = await Account.findByIdAndUpdate(
+    id,
+    {
+      $set: { user: newUser },
+    },
+    { new: true }
+  );
+  return await account?.save();
 };
 
-const becomeUser = (id:string) => {
-  
-}
-
-const getAccountById = (id: string) => {
-  return Account.findOne({ _id: id }).populate("user").populate("company");
-};
-
-const getAllAccounts = async () => {
-  return Account.find({}).populate("user").populate("company");
-};
 const createAccount = async (body: NewAccount) => {
   const existingAccount = await Account.findOne({
     $or: [{ email: body.email }, { phone: body.phone }],
@@ -45,18 +41,13 @@ const createAccount = async (body: NewAccount) => {
   });
   return await newUser.save();
 };
-const updateAccount = (id: string, body: Partial<PublicUser>) => {
-  return Account.findByIdAndUpdate(id, { $set: { ...body } });
-};
 
 const deleteAccount = async (id: string) => {
   await Account.findByIdAndDelete(id);
 };
 
 export default {
-  getAccountById,
-  getAllAccounts,
   createAccount,
-  updateAccount,
   deleteAccount,
+  becomeUser,
 };

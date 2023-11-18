@@ -10,46 +10,19 @@ import accessControl from "../middlewares/accessControl";
 
 const router = express.Router();
 
-router.post(
-  "/",
-  validator.body(accountValidations.newAccount),
-  accountController.createAccount
-);
-router.get(
-  "/search",
-  accessControl("ALL"),
-  validator.query(paginateValidations.query),
-  accountController.searchUser
-);
-
-router.get("/", accessControl("ALL"), accountController.getAllAccounts);
-
-router.get(
-  "/:id",
-  validator.params({ id: idValidation }),
-  accessControl("ALL"),
-  accountController.getAccount
-);
-
-router.post(
-  "/job-seeker",
-  accessControl("ALL"),
-  validator.body(accountValidations.updateAccount),
-  accountController.updateAccount
-);
-router.post(
-  "/become-recruiter",
-  accessControl("ALL"),
-  validator.body(accountValidations.updateAccount),
-  accountController.updateAccount
-);
+// router.get(
+//   "/search",
+//   accessControl("ALL"),
+//   validator.query(paginateValidations.query),
+//   accountController.searchUser
+// );
 
 router.put(
   "/:id",
   accessControl("ALL"),
   validator.params({ id: idValidation }),
-  validator.body(accountValidations.updateAccount),
-  accountController.updateAccount
+  validator.body(accountValidations.becomeUser),
+  accountController.becomeUser
 );
 
 router.delete(

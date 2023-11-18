@@ -21,4 +21,7 @@ export default {
     password: Joi.string().min(8).max(25).optional(),
     phone: Joi.string().optional(),
   }),
+  becomeUser: Joi.object({
+    username: Joi.string().required(),
+  }),
 };

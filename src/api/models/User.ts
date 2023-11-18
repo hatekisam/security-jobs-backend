@@ -49,7 +49,6 @@ schema.set("toJSON", {
   },
 });
 
-
 schema.virtual("role").get(function () {
   return "USER";
 });
