@@ -125,15 +125,9 @@ const verifyMail = async ({ email, code }: { email: string; code: string }) => {
 };
 
 const sendVerifyEmail = async (email: string) => {
-  const token = await generateAppToken(email, "VERIFY_EMAIL");
-
-  // todo: Get app url from config instead of hardcoding
-  mailer.sendVerificationEmail(
-    email,
-    `${config.CLIENT_URL}/verifyMail?token=${token}&email=${email}`
-  );
-
-  return { token };
+  const code = await generateAppToken(email, "VERIFY_EMAIL");
+  mailer.sendVerificationEmail(email, code);
+  return { msg: "The verification code sent successfully to the email" };
 };
 
 export default {
