@@ -18,10 +18,16 @@ const router = express.Router();
 // );
 
 router.put(
-  "/:id",
+  "/become-user/:id",
   accessControl("ALL"),
   validator.params({ id: idValidation }),
   validator.body(accountValidations.becomeUser),
+  accountController.becomeUser
+);
+router.put(
+  "/become-recruiter/:id",
+  accessControl("ALL"),
+  validator.params({ id: idValidation }),
   accountController.becomeUser
 );
 

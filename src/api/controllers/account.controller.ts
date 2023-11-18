@@ -25,6 +25,24 @@ const becomeUser = async (
   }
 };
 
+const becomeRecruiter = async (
+  req: IUserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (req.user?.id !== req.params.id)
+      throw new APIError(
+        status.BAD_REQUEST,
+        "You are not allowed to another person's account"
+      );
+    await accountService.becomeRecruiter(req.params.id);
+    res.json({ msg: "Become a recruiter successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const deleteAccount = async (
   req: IUserRequest,
   res: Response,
@@ -46,6 +64,7 @@ const deleteAccount = async (
 
 export default {
   becomeUser,
+  becomeRecruiter,
   deleteAccount,
   // searchUser,
 };

@@ -1,10 +1,9 @@
-import { Account, User } from "../models";
+import { Account, Company, User } from "../models";
 import bcrypt from "bcryptjs";
 import APIError from "../helpers/APIError";
 import status from "http-status";
 import config from "../../config/config";
 import { NewAccount } from "api/interfaces/Account";
-
 
 const becomeUser = async ({
   id,
@@ -19,6 +18,19 @@ const becomeUser = async ({
     id,
     {
       $set: { user: newUser },
+    },
+    { new: true }
+  );
+  return await account?.save();
+};
+
+const becomeRecruiter = async (id: string) => {
+  const newCompany = new Company();
+  await newCompany.save();
+  const account = await Account.findByIdAndUpdate(
+    id,
+    {
+      $set: { company: newCompany },
     },
     { new: true }
   );
@@ -50,4 +62,5 @@ export default {
   createAccount,
   deleteAccount,
   becomeUser,
+  becomeRecruiter,
 };
