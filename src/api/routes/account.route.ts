@@ -4,7 +4,7 @@ import validator from "../middlewares/validator";
 import {
   idValidation,
   paginateValidations,
-  accountValidations
+  accountValidations,
 } from "../validations";
 import accessControl from "../middlewares/accessControl";
 
@@ -31,6 +31,19 @@ router.get(
   accountController.getAccount
 );
 
+router.post(
+  "/job-seeker",
+  accessControl("ALL"),
+  validator.body(accountValidations.updateAccount),
+  accountController.updateAccount
+);
+router.post(
+  "/become-recruiter",
+  accessControl("ALL"),
+  validator.body(accountValidations.updateAccount),
+  accountController.updateAccount
+);
+
 router.put(
   "/:id",
   accessControl("ALL"),
@@ -45,6 +58,5 @@ router.delete(
   validator.params({ id: idValidation }),
   accountController.deleteAccount
 );
-
 
 export default router;

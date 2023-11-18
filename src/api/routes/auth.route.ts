@@ -120,7 +120,7 @@ router.post(
 );
 
 router.post(
-  "/verifyMail",
+  "/verify-mail",
   validator.body(authValidation.verifyMail),
   authController.verifyMail
 );

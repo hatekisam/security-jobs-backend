@@ -5,7 +5,11 @@ import bcrypt from "bcryptjs";
 import config from "../../config/config";
 import { NewUser } from "../interfaces/User";
 import { createAuthToken } from "../helpers/authToken";
-import { generateAppToken, verifyAppToken } from "../helpers/emailToken";
+import {
+  generateAppToken,
+  generateVerificationCode,
+  verifyAppToken,
+} from "../helpers/emailToken";
 import mailer from "../helpers/mailer";
 import { NewAccount } from "api/interfaces/Account";
 import accountService from "./account.service";
@@ -123,7 +127,7 @@ const verifyMail = async ({ email, code }: { email: string; code: string }) => {
 };
 
 const sendVerifyEmail = async (email: string) => {
-  const code = await generateAppToken(email, "VERIFY_EMAIL");
+  const code = await generateVerificationCode(email);
   mailer.sendVerificationEmail(email, code);
   return { msg: "The verification code sent successfully to the email" };
 };

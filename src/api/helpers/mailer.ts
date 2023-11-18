@@ -35,7 +35,7 @@ class Mailer {
   async sendVerificationEmail(toEmail: string, code: string): Promise<void> {
     try {
       const mailOptions = {
-        from: "service@jobapp.com",
+        from: "service@securityapp.com",
         to: toEmail,
         subject: "Email Verification",
         text: `Verification Code`,
@@ -45,7 +45,7 @@ class Mailer {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Password for Job App</title>
+  <title>Your Verification Code for  Security Job App</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -62,8 +62,7 @@ class Mailer {
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       border-radius: 8px;
       padding: 16px;
-      width: 300px;
-      text-align: center;
+      width: 400px;
     }
     .heading {
       font-size: 24px;
@@ -72,7 +71,7 @@ class Mailer {
     }
     .code-container {
       background-color: #edf2f7;
-      padding: 16px;
+      padding: 10px;
       border-radius: 4px;
       margin-bottom: 16px;
     }
@@ -104,25 +103,7 @@ class Mailer {
     <div class="code-container">
       <code class="code">${code}</code>
     </div>
-    <button class="copy-button" id="copyButton">Copy Code</button>
   </div>
-
-  <script>
-    const copyButton = document.getElementById('copyButton');
-    copyButton.addEventListener('click', () => {
-      const codeElement = document.querySelector('.code');
-      const password = codeElement.textContent;
-
-      const tempInput = document.createElement('input');
-      tempInput.value = password;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-
-      copyButton.textContent = 'Copied!';
-    });
-  </script>
 </body>
 </html>`,
       };
