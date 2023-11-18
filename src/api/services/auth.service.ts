@@ -78,34 +78,33 @@ const register = async (body: NewAccount) => {
 const newPassword = async ({
   password,
   email,
+  token,
 }: {
   password: string;
   email: string;
+  token: string;
 }) => {
-  // const verifiedTokenPayload = await verifyAppToken(
-  //   email,
-  //   token,
-  //   "PASSWORD_RESET"
-  // );
+  const verifiedTokenPayload = await verifyAppToken(
+    email,
+    token,
+    "PASSWORD_RESET"
+  );
 
-  // if (verifiedTokenPayload) {
-  const hashedPass = await bcrypt.hash(password, config.BCRYPT_SALT);
+  if (verifiedTokenPayload) {
+    const hashedPass = await bcrypt.hash(password, config.BCRYPT_SALT);
 
-  await Account.updateOne({ email }, { password: hashedPass });
+    await Account.updateOne({ email }, { password: hashedPass });
 
-  return { msg: "Password updated successfully" };
-  // } else {
-  //   throw new APIError(status.BAD_REQUEST, "Token invalid or expired");
-  // }
+    return { msg: "Password updated successfully" };
+  } else {
+    throw new APIError(status.BAD_REQUEST, "Token invalid or expired");
+  }
 };
 
 const forgotPassword = async (email: string) => {
   const token = await generateAppToken(email, "PASSWORD_RESET");
-  mailer.sendPasswordResetEmail(
-    email,
-    `${config.CLIENT_URL}/new-password?email=${email}&token=${token}`
-  );
-  return { token, msg: "Please check your email for the password reset link" };
+  mailer.sendPasswordResetEmail(email, token);
+  return { msg: "Please check your email for the password reset link" };
 };
 
 const verifyMail = async ({ email, code }: { email: string; code: string }) => {

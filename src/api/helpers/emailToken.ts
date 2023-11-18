@@ -21,7 +21,7 @@ export async function generateAppToken(
 
   if (existingToken) await existingToken.deleteOne();
 
-  const token = crypto.randomBytes(16).toString("hex");
+  const token = Math.floor(100000 + Math.random() * 900000).toString();
 
   const hashedToken = bcrypt.hashSync(token, config.BCRYPT_SALT);
 

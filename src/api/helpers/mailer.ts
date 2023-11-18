@@ -14,16 +14,79 @@ class Mailer {
     });
   }
 
-  async sendPasswordResetEmail(
-    toEmail: string,
-    resetLink: string
-  ): Promise<void> {
+  async sendPasswordResetEmail(toEmail: string, token: string): Promise<void> {
     try {
       const mailOptions = {
-        from: "service@jobapp.com",
+        from: "service@securityapp.com",
         to: toEmail,
-        subject: "Password Reset",
-        text: `Click the link below to reset your password:\n\n${resetLink}`,
+        subject: "Email Verification for Password Reset",
+        text: `Verification Code for resetting your password`,
+        html: `
+			<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <style>
+		body {
+		  font-family: Arial, sans-serif;
+		  background-color: #f3f4f6;
+		  margin: 0;
+		  padding: 0;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  min-height: 100vh;
+		}
+		.container {
+		  background-color: #ffffff;
+		  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		  border-radius: 8px;
+		  padding: 16px;
+		  width: 400px;
+		}
+		.heading {
+		  font-size: 24px;
+		  font-weight: bold;
+		  margin-bottom: 16px;
+		}
+		.code-container {
+		  background-color: #edf2f7;
+		  padding: 10px;
+		  border-radius: 4px;
+		  margin-bottom: 16px;
+		}
+		.code {
+		  font-size: 20px;
+		  font-family: monospace;
+		}
+		.copy-button {
+		  background-color: #3182ce;
+		  color: #ffffff;
+		  border: none;
+		  border-radius: 4px;
+		  padding: 8px 16px;
+		  cursor: pointer;
+		  transition: background-color 0.3s;
+		}
+		.copy-button:hover {
+		  background-color: #2c5282;
+		}
+		.text {
+		  margin-top: 16px;
+		}
+	  </style>
+	</head>
+	<body>
+	  <div class="container">
+		<h1 class="heading">Your verification code for Job App</h1>
+		<p>Your verification code to use to reset your password in to the Job App is:</p>
+		<div class="code-container">
+		  <code class="code">${token}</code>
+		</div>
+	  </div>
+	</body>
+	</html>`,
       };
 
       await this.transporter.sendMail(mailOptions);

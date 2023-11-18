@@ -9,7 +9,6 @@ export interface IAccount {
   user?: Types.ObjectId;
   company?: Types.ObjectId;
   emailVerified: boolean;
-  phoneVerified: boolean;
 }
 
 export interface IAccountMethods {
@@ -25,7 +24,6 @@ const schema = new Schema<IAccount>(
     emailVerified: { type: Boolean, default: false },
     password: { type: String, required: true },
     phone: { type: String, required: true, unique: true },
-    phoneVerified: { type: Boolean, default: false },
     user: { type: Schema.ObjectId },
     company: { types: Schema.ObjectId },
   },

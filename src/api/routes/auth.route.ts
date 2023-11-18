@@ -97,15 +97,15 @@ router.post(
 
 router.post(
   "/forgot-password/",
-  validator.body(accountValidations.forgotPassword),
+  validator.body(authValidation.forgotPassword),
   authController.forgotPassword
 );
 
-router.post(
-  "/verify-email/",
-  validator.body(accountValidations.verifyEmail),
-  authController.verifyMail
-);
+// router.post(
+//   "/verify-email/",
+//   validator.body(accountValidations.verifyEmail),
+//   authController.verifyMail
+// );
 
 router.post(
   "/new-password",
