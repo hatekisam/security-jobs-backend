@@ -5,6 +5,7 @@ import {
   idValidation,
   paginateValidations,
   accountValidations,
+  companyValidations,
 } from "../validations";
 import accessControl from "../middlewares/accessControl";
 
@@ -28,7 +29,8 @@ router.put(
   "/become-recruiter/:id",
   accessControl("ALL"),
   validator.params({ id: idValidation }),
-  accountController.becomeUser
+  validator.body(companyValidations.newCompany),
+  accountController.becomeRecruiter
 );
 
 router.delete(
