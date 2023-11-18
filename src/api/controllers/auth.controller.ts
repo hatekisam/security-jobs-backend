@@ -57,11 +57,9 @@ const forgotPassword = async (
 const newPassword = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {
-      body: { password, email, token },
+      body: { password, email },
     } = req;
-
-    const response = await authService.newPassword({ password, email, token });
-
+    const response = await authService.newPassword({ password, email });
     res.status(200).json(response);
   } catch (err) {
     next(err);
