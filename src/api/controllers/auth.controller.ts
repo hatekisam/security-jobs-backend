@@ -71,11 +71,9 @@ const newPassword = async (req: Request, res: Response, next: NextFunction) => {
 const verifyMail = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {
-      body: { email, token },
+      body: { email, code },
     } = req;
-
-    const response = await authService.verifyMail({ email, token });
-
+    const response = await authService.verifyMail({ email, code });
     res.status(200).json(response);
   } catch (err) {
     next(err);

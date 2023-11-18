@@ -11,6 +11,7 @@ export default {
     email: Joi.string().email().required(),
   }),
   verifyEmail: Joi.object({
+    email: Joi.string().email().required(),
     code: Joi.string().length(4),
   }),
   loginAccount: Joi.object<LoginAccount>({

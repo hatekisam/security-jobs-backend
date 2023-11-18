@@ -106,19 +106,13 @@ const forgotPassword = async (email: string) => {
   return { token, msg: "Please check your email for the password reset link" };
 };
 
-const verifyMail = async ({
-  email,
-  token,
-}: {
-  email: string;
-  token: string;
-}) => {
-  const validToken = await verifyAppToken(email, token, "VERIFY_EMAIL");
+const verifyMail = async ({ email, code }: { email: string; code: string }) => {
+  const validToken = await verifyAppToken(email, code, "VERIFY_EMAIL");
 
   if (!validToken)
     throw new APIError(status.BAD_REQUEST, `Token invalid or expired`);
 
-  const user = await User.findOneAndUpdate(
+  const user = await Account.findOneAndUpdate(
     { email },
     { emailVerified: true },
     { new: true }
