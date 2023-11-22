@@ -5,9 +5,9 @@ import {
   idValidation,
   paginateValidations,
   accountValidations,
+  userValidations
 } from "../validations";
 import accessControl from "../middlewares/accessControl";
-import userValidations from "api/validations/user.validations";
 
 const router = express.Router();
 

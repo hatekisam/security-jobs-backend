@@ -1,4 +1,5 @@
 export { default as accountValidations } from "./account.validations";
+export { default as userValidations } from "./user.validations";
 export { default as companyValidations } from "./company.validations";
 export { default as metadataValidations } from "./metadata.validations";
 export { default as adminValidations } from "./admin.validations";
