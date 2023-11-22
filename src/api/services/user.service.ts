@@ -34,6 +34,12 @@ const updateUser = (id: string, body: Partial<PublicUser>) => {
   return Account.findByIdAndUpdate(id, { $set: { ...body } });
 };
 
+const addAbout = async (id: string, about: string) => {
+  const account = await Account.findById(id);
+  await User.findByIdAndUpdate(account?.user?._id, { $set: { about } });
+  return Account.findById(id);
+};
+
 const deleteUser = async (id: string) => {
   await Account.findByIdAndDelete(id);
 };
@@ -41,6 +47,7 @@ const deleteUser = async (id: string) => {
 export default {
   getUserById,
   getAllUsers,
+  addAbout,
   // createAccount,
   updateUser,
   deleteUser,

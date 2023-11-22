@@ -7,6 +7,7 @@ import {
   accountValidations,
 } from "../validations";
 import accessControl from "../middlewares/accessControl";
+import userValidations from "api/validations/user.validations";
 
 const router = express.Router();
 
@@ -31,6 +32,13 @@ router.put(
   validator.body(accountValidations.updateAccount),
   userController.updateUser
 );
+
+router.post(
+  "/about",
+  accessControl("ALL"),
+  validator.body(userValidations.addAbout),
+  userController.addAbout
+)
 
 router.delete(
   "/:id",
