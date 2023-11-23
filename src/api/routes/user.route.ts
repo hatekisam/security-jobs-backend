@@ -5,7 +5,7 @@ import {
   idValidation,
   paginateValidations,
   accountValidations,
-  userValidations
+  userValidations,
 } from "../validations";
 import accessControl from "../middlewares/accessControl";
 
@@ -17,10 +17,11 @@ const router = express.Router();
 //   userController.searchUser
 // );
 
-router.get("/", userController.getAllUsers);
+router.get("/", accessControl("ALL"), userController.getAllUsers);
 
 router.get(
   "/:id",
+  accessControl("ALL"),
   validator.params({ id: idValidation }),
   userController.getUserById
 );
@@ -38,7 +39,7 @@ router.post(
   accessControl("ALL"),
   validator.body(userValidations.addAbout),
   userController.addAbout
-)
+);
 
 router.delete(
   "/:id",

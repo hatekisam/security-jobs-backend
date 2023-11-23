@@ -52,7 +52,46 @@ const addAbout = async (
     const account = await userService.addAbout(req.user.id,req.body.about);
     if (!account)
       throw new APIError(status.NOT_FOUND, "Account does not exist");
+    res.status(status.OK).json(account.toJsonWithoutPassword());
+  } catch (err) {
+    next(err);
+  }
+};
 
+const addWorkExperience = async (
+  req: IUserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (!req.user?.id)
+      throw new APIError(
+        status.UNAUTHORIZED,
+        "Invalid token"
+      );
+    const account = await userService.addAbout(req.user.id,req.body.about);
+    if (!account)
+      throw new APIError(status.NOT_FOUND, "Account does not exist");
+    res.status(status.OK).json(account.toJsonWithoutPassword());
+  } catch (err) {
+    next(err);
+  }
+};
+
+const addWorkExperience = async (
+  req: IUserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (!req.user?.id)
+      throw new APIError(
+        status.UNAUTHORIZED,
+        "Invalid token"
+      );
+    const account = await userService.addAbout(req.user.id,req.body.about);
+    if (!account)
+      throw new APIError(status.NOT_FOUND, "Account does not exist");
     res.status(status.OK).json(account.toJsonWithoutPassword());
   } catch (err) {
     next(err);

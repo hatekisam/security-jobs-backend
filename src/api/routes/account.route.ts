@@ -18,15 +18,15 @@ const router = express.Router();
 //   accountController.searchUser
 // );
 
-router.put(
-  "/become-user/:id",
+router.get(
+  "/become-user/",
   accessControl("ALL"),
   validator.params({ id: idValidation }),
   validator.body(accountValidations.becomeUser),
   accountController.becomeUser
 );
-router.put(
-  "/become-recruiter/:id",
+router.get(
+  "/become-recruiter/",
   accessControl("ALL"),
   validator.params({ id: idValidation }),
   validator.body(companyValidations.newCompany),
