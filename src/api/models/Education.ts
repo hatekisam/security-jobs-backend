@@ -1,6 +1,6 @@
 import { Schema, model, Model } from "mongoose";
 
-export interface IWorkExperience {
+export interface IEducation {
   title: string;
   company: string;
   description?: string;
@@ -9,9 +9,9 @@ export interface IWorkExperience {
   currentJob: boolean;
 }
 
-type WorkExperienceModel = Model<IWorkExperience, Record<string, never>>;
+type EductionModel = Model<IEducation, Record<string, never>>;
 
-const schema = new Schema<IWorkExperience, WorkExperienceModel>(
+const schema = new Schema<IEducation, EductionModel>(
   {
     title: { type: String, required: true },
     company: { type: String, required: true },
@@ -33,9 +33,9 @@ schema.set("toJSON", {
   },
 });
 
-const WorkExperience = model<IWorkExperience, WorkExperienceModel>(
-  "WorkExperience",
+const Education = model<IEducation, EductionModel>(
+  "Education",
   schema
 );
 
-export default WorkExperience;
+export default Education;
