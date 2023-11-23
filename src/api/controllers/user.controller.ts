@@ -44,12 +44,8 @@ const addAbout = async (
   next: NextFunction
 ) => {
   try {
-    if (!req.user?.id)
-      throw new APIError(
-        status.UNAUTHORIZED,
-        "Invalid token"
-      );
-    const account = await userService.addAbout(req.user.id,req.body.about);
+    if (!req.user?.id) throw new APIError(status.UNAUTHORIZED, "Invalid token");
+    const account = await userService.addAbout(req.user.id, req.body.about);
     if (!account)
       throw new APIError(status.NOT_FOUND, "Account does not exist");
     res.status(status.OK).json(account.toJsonWithoutPassword());
@@ -64,12 +60,8 @@ const addWorkExperience = async (
   next: NextFunction
 ) => {
   try {
-    if (!req.user?.id)
-      throw new APIError(
-        status.UNAUTHORIZED,
-        "Invalid token"
-      );
-    const account = await userService.addWorkExperience(req.user.id,req.body);
+    if (!req.user?.id) throw new APIError(status.UNAUTHORIZED, "Invalid token");
+    const account = await userService.addWorkExperience(req.user.id, req.body);
     if (!account)
       throw new APIError(status.NOT_FOUND, "Account does not exist");
     res.status(status.OK).json(account.toJsonWithoutPassword());
@@ -84,12 +76,8 @@ const addEducation = async (
   next: NextFunction
 ) => {
   try {
-    if (!req.user?.id)
-      throw new APIError(
-        status.UNAUTHORIZED,
-        "Invalid token"
-      );
-    const account = await userService.addEduction(req.user.id,req.body);
+    if (!req.user?.id) throw new APIError(status.UNAUTHORIZED, "Invalid token");
+    const account = await userService.addEducation(req.user.id, req.body);
     if (!account)
       throw new APIError(status.NOT_FOUND, "Account does not exist");
     res.status(status.OK).json(account.toJsonWithoutPassword());

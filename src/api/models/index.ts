@@ -10,3 +10,5 @@ export { default as CourseReview } from "./Review";
 export { default as Testimonial } from "./Testimonial";
 export { default as Account, IAccount } from "./Account";
 export { default as Company, ICompany } from "./Company";
+export { default as Education, IEducation } from "./Education";
+export { default as WorkExperience, IWorkExperience } from "./WorkExperience";

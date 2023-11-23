@@ -35,10 +35,23 @@ router.put(
 );
 
 router.post(
-  "/about",
+  "/profile/about",
   accessControl("ALL"),
   validator.body(userValidations.addAbout),
   userController.addAbout
+);
+
+router.post(
+  "/profile/work",
+  accessControl("ALL"),
+  validator.body(userValidations.addWorkExperience),
+  userController.addWorkExperience
+);
+router.post(
+  "/profile/education",
+  accessControl("ALL"),
+  validator.body(userValidations.addEducation),
+  userController.addEducation
 );
 
 router.delete(

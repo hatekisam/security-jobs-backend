@@ -1,4 +1,11 @@
-import { Account, User } from "../models";
+import {
+  Account,
+  Education,
+  IEducation,
+  IWorkExperience,
+  User,
+  WorkExperience,
+} from "../models";
 import { NewUser, PublicUser } from "../interfaces/User";
 import bcrypt from "bcryptjs";
 import APIError from "../helpers/APIError";
@@ -39,15 +46,30 @@ const addAbout = async (id: string, about: string) => {
   await User.findByIdAndUpdate(account?.user?._id, { $set: { about } });
   return Account.findById(id);
 };
-const addWorkExperience = async (id: string, body:WorkExperience) => {
+const addWorkExperience = async (id: string, body: IWorkExperience) => {
   const account = await Account.findById(id);
-  await User.findByIdAndUpdate(account?.user?._id, { $set: { about } });
-  return Account.findById(id);
+  if (!account) {
+    throw new APIError(status.NOT_FOUND, "Account not found");
+  }
+  const newWork = new WorkExperience(body);
+  await newWork.save();
+  await User.findByIdAndUpdate(account?.user?._id, {
+    $push: { workExperience: newWork.id },
+  });
+  return await Account.findById(id);
 };
-const addEducation = async (id: string, about: string) => {
+
+const addEducation = async (id: string, body: IEducation) => {
   const account = await Account.findById(id);
-  await User.findByIdAndUpdate(account?.user?._id, { $set: { about } });
-  return Account.findById(id);
+  if (!account) {
+    throw new APIError(status.NOT_FOUND, "Account not found");
+  }
+  const education = new Education(body);
+  await education.save();
+  await User.findByIdAndUpdate(account?.user?._id, {
+    $push: { education: education.id },
+  });
+  return await Account.findById(id);
 };
 
 const deleteUser = async (id: string) => {
