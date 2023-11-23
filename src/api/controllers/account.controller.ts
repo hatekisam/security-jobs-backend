@@ -12,14 +12,11 @@ const becomeUser = async (
   next: NextFunction
 ) => {
   try {
-    if (req.user?.id !== req.params.id)
-      throw new APIError(
-        status.BAD_REQUEST,
-        "You are not allowed to another person's account"
-      );
-
-    await accountService.becomeUser(req.body);
-    res.json({ msg: "Became a normal user successfully" });
+    const account = await accountService.becomeUser({
+      id: req.user?.id,
+      username: req.body.username,
+    });
+    res.json({ msg: "Became a normal user successfully", account });
   } catch (err) {
     next(err);
   }
@@ -31,13 +28,11 @@ const becomeRecruiter = async (
   next: NextFunction
 ) => {
   try {
-    if (req.user?.id !== req.params.id)
-      throw new APIError(
-        status.BAD_REQUEST,
-        "You are not allowed to another person's account"
-      );
-    await accountService.becomeRecruiter(req.params.id, req.body);
-    res.json({ msg: "Become a recruiter successfully" });
+    const account = await accountService.becomeRecruiter(
+      req.user?.id,
+      req.body
+    );
+    res.json({ msg: "Become a recruiter successfully", account });
   } catch (err) {
     next(err);
   }

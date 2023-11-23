@@ -9,31 +9,39 @@ const becomeUser = async ({
   id,
   username,
 }: {
-  id: string;
+  id: string | undefined;
   username: string;
 }) => {
+  if (id == undefined)
+    throw new APIError(status.UNAUTHORIZED, "You are not logged in");
+  const account = await Account.findById(id);
+  if (!account)
+    throw new APIError(
+      status.NOT_FOUND,
+      "There is no account with the given id"
+    );
+  if (account?.user)
+    throw new APIError(status.CONFLICT, "You are already a user");
   const newUser = new User({ username: username });
   await newUser.save();
-  const account = await Account.findByIdAndUpdate(
-    id,
-    {
-      $set: { user: newUser },
-    },
-    { new: true }
-  );
-  return await account?.save();
+  account.user = newUser.id;
+  return account.save();
 };
 
-const becomeRecruiter = async (id: string, body: ICompany) => {
+const becomeRecruiter = async (id: string | undefined, body: ICompany) => {
+  if (id == undefined)
+    throw new APIError(status.UNAUTHORIZED, "You are not logged in");
+  const account = await Account.findById(id);
+  if (!account)
+    throw new APIError(
+      status.NOT_FOUND,
+      "There is no account with the given id"
+    );
+  if (account.user)
+    throw new APIError(status.CONFLICT, "You are already a recruiter");
   const newCompany = new Company(body);
   await newCompany.save();
-  const account = await Account.findByIdAndUpdate(
-    id,
-    {
-      $set: { company: newCompany },
-    },
-    { new: true }
-  );
+  account.company = newCompany.id;
   return await account?.save();
 };
 
