@@ -69,7 +69,7 @@ const addWorkExperience = async (
         status.UNAUTHORIZED,
         "Invalid token"
       );
-    const account = await userService.addAbout(req.user.id,req.body.about);
+    const account = await userService.addWorkExperience(req.user.id,req.body);
     if (!account)
       throw new APIError(status.NOT_FOUND, "Account does not exist");
     res.status(status.OK).json(account.toJsonWithoutPassword());
@@ -78,7 +78,7 @@ const addWorkExperience = async (
   }
 };
 
-const addWorkExperience = async (
+const addEducation = async (
   req: IUserRequest,
   res: Response,
   next: NextFunction
@@ -89,7 +89,7 @@ const addWorkExperience = async (
         status.UNAUTHORIZED,
         "Invalid token"
       );
-    const account = await userService.addAbout(req.user.id,req.body.about);
+    const account = await userService.addEduction(req.user.id,req.body);
     if (!account)
       throw new APIError(status.NOT_FOUND, "Account does not exist");
     res.status(status.OK).json(account.toJsonWithoutPassword());
@@ -162,6 +162,8 @@ export default {
   getUserById,
   getAllUsers,
   addAbout,
+  addWorkExperience,
+  addEducation,
   // createAccount,
   updateUser,
   deleteUser,
