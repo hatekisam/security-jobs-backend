@@ -24,19 +24,6 @@ const getAllUsers = async (_req: Request, res: Response) => {
   res.json(transformedAccounts);
 };
 
-// const createAccount = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { body: newUser } = req;
-//     const savedUser = await userService.createAccount(newUser);
-//     res.status(status.CREATED).json(savedUser.toJsonWithoutPassword());
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 const addAbout = async (
   req: IUserRequest,
@@ -70,7 +57,39 @@ const addWorkExperience = async (
   }
 };
 
+const editWorkExperience = async (
+  req: IUserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (!req.user?.id) throw new APIError(status.UNAUTHORIZED, "Invalid token");
+    const account = await userService.addWorkExperience(req.user.id, req.body);
+    if (!account)
+      throw new APIError(status.NOT_FOUND, "Account does not exist");
+    res.status(status.OK).json(account.toJsonWithoutPassword());
+  } catch (err) {
+    next(err);
+  }
+};
+
 const addEducation = async (
+  req: IUserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (!req.user?.id) throw new APIError(status.UNAUTHORIZED, "Invalid token");
+    const account = await userService.addEducation(req.user.id, req.body);
+    if (!account)
+      throw new APIError(status.NOT_FOUND, "Account does not exist");
+    res.status(status.OK).json(account.toJsonWithoutPassword());
+  } catch (err) {
+    next(err);
+  }
+};
+
+const editEducation = async (
   req: IUserRequest,
   res: Response,
   next: NextFunction
@@ -151,8 +170,9 @@ export default {
   getAllUsers,
   addAbout,
   addWorkExperience,
+  editEducation,
+  editWorkExperience,
   addEducation,
-  // createAccount,
   updateUser,
   deleteUser,
   searchUser,

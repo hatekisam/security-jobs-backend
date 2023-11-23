@@ -29,6 +29,9 @@ schema.set("toJSON", {
   },
 });
 
-const Appreciation = model<IAppreciation, AppreciationModel>("Appreciation", schema);
+const Appreciation = model<IAppreciation, AppreciationModel>(
+  "Appreciation",
+  schema
+);
 
 export default Appreciation;
